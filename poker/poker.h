@@ -2,6 +2,12 @@
 
 #include "stdafx.h"
 
+namespace Parser {
+    std::array<std::array<std::string, 5>, 2> 
+                                    SplitInputHands(const std::string& hands);
+}
+
+
 enum class Suit { Diamonds, Hearts, Clubs, Spades };
 
 enum class Rank {
@@ -17,6 +23,3 @@ struct PokerHand {
     const std::array<Card, 5> cards;
     const Rank highCard;
 };
-
-std::vector<std::string> SplitInputHands(std::string);
-//std::vector<std::vector<std::string>> SplitHands(std::vector<std::string>);
