@@ -17,13 +17,48 @@ TEST_CASE("Input string is split into two poker hand strings") {
 }
 
 TEST_CASE("Poker hand string is converted in poker hand vector of Cards") {
-    std::set<Data::Card> expect = {
+    std::multiset<Data::Card> expect = {
         Data::Card {2, 'H'}, Data::Card {3, 'D'}, Data::Card {5, 'S'},
         Data::Card {9, 'C'}, Data::Card {12, 'D'}
     };
 
     std::array<std::string, 5> input = { "2H", "3D", "5S", "9C", "KD" };
-    std::set<Data::Card> actual = Parser::CreateHand(input);
+    std::multiset<Data::Card> actual = Parser::CreateHand(input);
 
     REQUIRE(expect == actual);
+}
+
+TEST_CASE("Can get straights from a poker hand") {
+    SECTION("Get straight beginning with Ace") {
+        Data::PokerHand expected{ Data::PokerHandType::Straight, 5 };
+        std::multiset<Data::Card> input = {
+            {13, 'H'}, { 2, 'H' }, { 3, 'H' }, { 4, 'H' }, { 5, 'H' } 
+        };
+        
+        Data::PokerHand actual = Eval::GetStraight(input);
+
+        REQUIRE(expected == actual);
+    }
+
+    SECTION("Get straight ending with Ace") {
+        Data::PokerHand expected{ Data::PokerHandType::Straight, 13 };
+        std::multiset<Data::Card> input = {
+            { 13, 'H' },{ 9, 'H' },{ 10, 'H' },{ 11, 'H' },{ 12, 'H' }
+        };
+
+        Data::PokerHand actual = Eval::GetStraight(input);
+
+        REQUIRE(expected == actual);
+    }
+
+    SECTION("Get straight with no Ace") {
+        Data::PokerHand expected{ Data::PokerHandType::Straight, 6 };
+        std::multiset<Data::Card> input = {
+            { 6, 'H' },{ 2, 'H' },{ 3, 'H' },{ 4, 'H' },{ 5, 'H' }
+        };
+
+        Data::PokerHand actual = Eval::GetStraight(input);
+
+        REQUIRE(expected == actual);
+    }
 }
