@@ -81,6 +81,7 @@ namespace Eval {
     Data::PokerHand GetStraight(const std::multiset<Data::Card>& hand);
     Data::PokerHand GetFlush(const std::multiset<Data::Card>& hand);
     std::set<Data::PokerHand> GetPairs(const std::multiset<Data::Card>& hand);
-    Data::PokerHand GetThreeOfAKind(const std::multiset<Data::Card>& hand);
+    Data::PokerHand GetThreeOrFourOfAKind(
+        const std::multiset<Data::Card>& hand);
     Data::PokerHand GetHighCard(const std::multiset<Data::Card>& hand);
 }
