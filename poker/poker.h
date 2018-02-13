@@ -9,10 +9,21 @@ namespace Data {
         FourOfAKind, StraightFlush
     };
 
+    const std::map<PokerHandType, std::string> PrintPokerHandType = {
+        {HighCard, "high card"}, {OnePair, "one pair"}, {TwoPair, "two pair"},
+        {ThreeOfAKind, "three of a kind"}, {Straight, "straight"},
+        {Flush, "flush"}, {FullHouse, "full house"}, 
+        {FourOfAKind, "four of a kind"}, {StraightFlush, "straight flush"}
+    };
+
     const std::map<char, int> Ranks = {
         { '2', 2 }, { '3', 3 }, { '4', 4 }, { '5', 5 }, { '6', 6 }, { '7', 7 },
         { '8', 8 }, { '9', 9 }, 
         { 'J', 10 }, { 'Q', 11 }, { 'K', 12 }, { 'A', 13 }
+    };
+
+    const std::map<int, std::string> PrintRanks = {
+        {10, "Jack"}, {11, "Queen"}, {12, "King"}, {13, "Ace"}
     };
 
     struct Card {
@@ -54,6 +65,10 @@ namespace Data {
         return lhs.type == rhs.type && lhs.value == rhs.value;
     }
 
+    inline bool operator!=(const PokerHand& lhs, const PokerHand& rhs) {
+        return lhs.type != rhs.type || lhs.value != rhs.value;
+    }
+
     inline bool operator<(const PokerHand& lhs, const PokerHand& rhs) {
         return lhs.type < rhs.type 
             || (lhs.type == rhs.type && lhs.value < rhs.value);
@@ -84,4 +99,9 @@ namespace Eval {
     Data::PokerHand GetThreeOrFourOfAKind(
         const std::multiset<Data::Card>& hand);
     Data::PokerHand GetHighCard(const std::multiset<Data::Card>& hand);
+    Data::PokerHand GetPokerHand(const std::multiset<Data::Card>& hand);
+}
+
+namespace Game {
+    std::string PlayPoker(const std::string& hands);
 }
